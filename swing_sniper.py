@@ -79,15 +79,22 @@ def bulk_sniper_check(tickers):
             df['L325'] = df['Low'].rolling(325).min()
             df['H325'] = df['High'].rolling(325).max()
 
+            # Hitung Score
             df['Score'] = (
                 (df['Close'] - df['Close'].shift(14))
                 * (df['Volume'] / df['SMA_V20'])
                 * ((df['Close'] - df['L325']) / (df['H325'] - df['L325']))
             )
 
+            # !!! PENTING: Potong data 325 hari pertama biar nggak ngerusak Quantile !!!
+            valid_df = df.iloc[325:].copy() 
+            
+            if valid_df.empty:
+                continue
+
             # Top 5% signals
-            threshold = df['Score'].quantile(0.95)
-            signals = df[df['Score'] > threshold]
+            threshold = valid_df['Score'].quantile(0.95)
+            signals = valid_df[valid_df['Score'] > threshold]
 
             p5_list, p10_list, p20_list = [], [], []
 
