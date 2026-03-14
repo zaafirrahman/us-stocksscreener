@@ -4,7 +4,7 @@ import os
 import pandas as pd
 import math
 
-def generate_html_dashboard(ticker, current_price, current_score, threshold, stats_df, full_power_rank, final_swing_score, verdict):
+def generate_html_dashboard(ticker, current_price, current_score, threshold, stats_df, full_power_rank, final_swing_score, verdict, recent_signals_df):
     # 1. Pastikan folder 'output' ada di lokasi script ini berada (Relative Path)
     script_dir = os.path.dirname(os.path.abspath(__file__))
     output_folder = os.path.join(script_dir, "output")
@@ -88,17 +88,17 @@ def generate_html_dashboard(ticker, current_price, current_score, threshold, sta
     
     # Styling Tabel Stats
     styled_stats = stats_df.style.format("{:.2f}").map(style_returns, subset=['Avg Return (%)'])
-    
-    # Reset index buat Power Rank supaya 'Rank' jadi kolom biasa
-    power_display = full_power_rank.reset_index()
-    display_cols = ['Rank', 'Date', 'Signal_Score', 'Entry', 'Return_5d (%)', 'Return_10d (%)', 'Return_20d (%)', 'W/L']
-    power_display = power_display[display_cols]
 
     # Styling Tabel Power (Format angka ke 2 desimal, kecuali kolom Date dan W/L)
     float_cols = ['Signal_Score', 'Entry', 'Return_5d (%)', 'Return_10d (%)', 'Return_20d (%)']
     styled_power = power_display.style.format({col: "{:.2f}" for col in float_cols})\
                                       .map(style_returns, subset=['Return_5d (%)', 'Return_10d (%)', 'Return_20d (%)'])
 
+    # 3. Persiapkan Variabel Recent Display (Regime Check)
+    # Variabelnya udah ada (recent_signals_df), tinggal kita poles CSS-nya
+    styled_recent = recent_signals_df.style.format({col: "{:.2f}" for col in float_cols})\
+                                           .map(style_returns, subset=['Return_5d (%)', 'Return_10d (%)', 'Return_20d (%)'])
+    
     # Build HTML Content
     html_content = f"""
     <html>
@@ -124,6 +124,9 @@ def generate_html_dashboard(ticker, current_price, current_score, threshold, sta
 
         <h2>📈 RATA-RATA PERFORMA STRATEGI</h2>
         {styled_stats.to_html(index=True)}
+
+        <h2>📅 10 RECENT SIGNALS (Regime Check)</h2>
+        {styled_recent.to_html(index=False)}
 
         <h2>🏆 THE COMPLETE POWER RANKING</h2>
         {styled_power.to_html(index=False)}
@@ -278,11 +281,14 @@ def simple_backtest(ticker):
         # Tentukan kolom yang mau diprint (biar rapi urutannya)
         cols = ['Date', 'Signal_Score', 'Entry', 'Return_5d (%)', 'Return_10d (%)', 'Return_20d (%)', 'W/L']
 
+        recent_signals_df = report[cols].tail(10).copy()
+        recent_signals_df = recent_signals_df.reset_index(drop=True)
+        
         # --- TABEL 1: 10 CLOSEST DATE (REGIME CHECK) ---
         print(f"\n📅 10 RECENT SIGNALS (Closest to Today):")
         print("-" * 115)
         # Tambahin kolom cols di sini
-        print(report[cols].tail(10).to_string(index=False))
+        print(recent_signals_df.to_string(index=False))
         print("-" * 115)
 
         # --- TABEL 2: RATA-RATA PERFORMA (STRATEGY METRICS) ---
@@ -342,9 +348,9 @@ def simple_backtest(ticker):
     else:
         print("\nSinyal historis belum cukup untuk dianalisa.")
 
-    generate_html_dashboard(ticker, current_price, current_score, threshold, stats_df, full_power_rank, final_swing_score, verdict)
+    generate_html_dashboard(ticker, current_price, current_score, threshold, stats_df, full_power_rank, final_swing_score, verdict, recent_signals_df)
 
 # EXECUTION
-ticker_to_test = 'BKNG' # Ganti sesukamu
+ticker_to_test = 'AEM' # Ganti sesukamu
 simple_backtest(ticker_to_test)
 
