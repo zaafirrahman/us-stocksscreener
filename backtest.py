@@ -4,7 +4,7 @@ import os
 import pandas as pd
 import math
 
-def generate_html_dashboard(ticker, current_price, current_score, threshold, stats_df, full_power_rank, final_swing_score, verdict, recent_signals_df):
+def generate_html_dashboard(ticker, current_price, current_score, threshold, stats_df, full_power_rank, final_swing_score, verdict, recent_signals_df, company):
     # 1. Pastikan folder 'output' ada di lokasi script ini berada (Relative Path)
     script_dir = os.path.dirname(os.path.abspath(__file__))
     output_folder = os.path.join(script_dir, "output")
@@ -104,7 +104,7 @@ def generate_html_dashboard(ticker, current_price, current_score, threshold, sta
     <html>
     <head><title>Sniper - {ticker}</title>{style}</head>
     <body>
-        <h1>🚀 QUANT SNIPER DASHBOARD: <a href="{yahoo_link}" target="_blank" class="ticker-link">{ticker}</a></h1>
+        <h1>{company} <a href="{yahoo_link}" target="_blank" class="ticker-link">({ticker})</a></h1>
         
         <div class="status-container">
             <div class="status-box">
@@ -142,7 +142,7 @@ def generate_html_dashboard(ticker, current_price, current_score, threshold, sta
         f.write(html_content)
     print(f"✨ Dashboard saved to: {html_filename}")
 
-def simple_backtest(ticker):
+def simple_backtest(ticker, company):
     print(f"🧐 Menjalankan Sinkronisasi & Backtest untuk {ticker}...")
     
     # 1. Download data 2y (Sesuai Screener agar logic H325/L325 sinkron)
@@ -348,9 +348,12 @@ def simple_backtest(ticker):
     else:
         print("\nSinyal historis belum cukup untuk dianalisa.")
 
-    generate_html_dashboard(ticker, current_price, current_score, threshold, stats_df, full_power_rank, final_swing_score, verdict, recent_signals_df)
+    generate_html_dashboard(ticker, current_price, current_score, threshold, stats_df, full_power_rank, final_swing_score, verdict, recent_signals_df, company)
 
 # EXECUTION
-ticker_to_test = 'AEM' # Ganti sesukamu
-simple_backtest(ticker_to_test)
+ticker_to_test = 'PH' # Ganti sesukamu
+stock = yf.Ticker(ticker_to_test)
+company_name = stock.info["longName"]
+
+simple_backtest(ticker_to_test, company_name)
 
