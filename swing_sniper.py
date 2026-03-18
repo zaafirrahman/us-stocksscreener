@@ -424,7 +424,7 @@ with open(html_path, "w", encoding="utf-8") as f:
     f.write(html_style)
     f.write("</head><body>")
 
-    f.write("<h2>🚀 QUANT SWING SNIPER</h2>")
+    f.write("<h2>Runner Performance Protocol</h2>")
     f.write(f"<p style='text-align:center'>Generated {timestamp}</p>")
 
     f.write(html_table)

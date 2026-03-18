@@ -86,69 +86,94 @@ tickers = [
     'USO', 'XLU', 'GDX', 'SMH', 'VIG', 'VWO', 'VNQI', 'VYM', 'VGT', 'VCIT', 
     'VNQ', 'VCSH', 'VTIP', 'VEA', 'BND', 'BNDX', 'VXUS', 'VTI', 'VTV'] 
 
+import pandas as pd
+import numpy as np
+import yfinance as yf
+
+import pandas as pd
+import numpy as np
+import yfinance as yf
+
 def run_screener(ticker_list):
     print(f"🚀 Starting screening for {len(ticker_list)} tickers...")
     
-    # 2. BULK DATA DOWNLOAD
-    # Fetch ~2 years of data (500+ trading days) to cover a 325-day range
+    # 1. BULK DATA DOWNLOAD
     try:
-        data = yf.download(ticker_list, period="2y", interval="1d", group_by='ticker', threads=True)
+        # Kita ambil periode 2 tahun agar cukup untuk warmup 325 hari
+        data = yf.download(ticker_list, period="3y", interval="1d", group_by='ticker', threads=True)
     except Exception as e:
         print(f"❌ Error while downloading data: {e}")
         return None
 
     results = []
 
-    # 3. PROCESS EACH TICKER
+    # 2. PROCESS EACH TICKER
     for ticker in ticker_list:
         try:
-            # Get sub-dataframe for this ticker
-            df = data[ticker].copy().dropna()
-            
+            # Mengambil data per ticker dari multi-index dataframe
+            if len(ticker_list) > 1:
+                df = data[ticker].copy().dropna()
+            else:
+                df = data.copy().dropna() # Jika hanya 1 ticker, yfinance mengembalikan df biasa
+
             if len(df) < 325:
-                # Skip if historical data is less than 1 year (new IPO / incomplete data)
                 continue
 
-            # --- Score Formula Components ---
-            last_price = df['Close'].iloc[-1]
-            last_vol = df['Volume'].iloc[-1]
-            
-            # A. 14-Day Momentum (Delta P14)
-            p14 = last_price - df['Close'].iloc[-14]
-            
-            # B. Volume Surge (Volume / SMA Volume 20)
-            sma_v20 = df['Volume'].tail(20).mean()
-            vol_surge = last_vol / sma_v20
-            
-            # C. Relative Strength (325-Day Range)
-            h325 = df['High'].tail(325).max()
-            l325 = df['Low'].tail(325).min()
-            range_pos = (last_price - l325) / (h325 - l325)
-            
+            # --- ENGINE SIGNAL LOGIC (Persis calculate_score) ---
+            # Menghitung SMA Volume 20 hari
+            df["SMA_V20"] = df["Volume"].rolling(20).mean()
+
+            # Menghitung High/Low dalam rentang 325 hari
+            df["H325"] = df["High"].rolling(325).max()
+            df["L325"] = df["Low"].rolling(325).min()
+
+            # A. 14-Day Momentum (P14)
+            df["P14"] = df["Close"] - df["Close"].shift(14)
+
+            # B. Volume Surge
+            df["VOL_SURGE"] = df["Volume"] / df["SMA_V20"]
+
+            # C. Relative Strength (Range Position)
+            # Menggunakan .replace(0, np.nan) untuk menghindari pembagian dengan nol
+            df["RANGE_POS"] = (
+                (df["Close"] - df["L325"]) / 
+                (df["H325"] - df["L325"]).replace(0, np.nan)
+            )
+
             # --- FINAL SCORE CALCULATION ---
-            # Score = Momentum * Vol_Surge * Range_Pos
-            score = p14 * vol_surge * range_pos
-            
+            df["SCORE"] = df["P14"] * df["VOL_SURGE"] * df["RANGE_POS"]
+
+            # 3. AMBIL DATA TERBARU (Baris Terakhir)
+            # Kita hanya butuh baris terakhir setelah seluruh kolom dihitung
+            latest = df.iloc[-1]
+
+            # Jika score NaN (karena data tidak cukup atau pembagian nol), lewati
+            if pd.isna(latest["SCORE"]):
+                continue
+
             results.append({
                 'Ticker': ticker,
-                'Last_Price': round(last_price, 2),
-                'Momentum_14d': round(p14, 2),
-                'Vol_Surge': round(vol_surge, 2),
-                'Range_Pos_325': round(range_pos, 4),
-                'Quant_Score': round(score, 4)
+                'Last_Price': round(latest['Close'], 2),
+                'Momentum_14d': round(latest['P14'], 2),
+                'Vol_Surge': round(latest['VOL_SURGE'], 2),
+                'Range_Pos_325': round(latest['RANGE_POS'], 4),
+                'Quant_Score': round(latest['SCORE'], 4)
             })
             
-        except:
-            # Skip tickers with problematic data (delisted / error)
+        except Exception as e:
+            # Skip jika ada error spesifik pada ticker tersebut
             continue
 
-    # 4. CONVERT TO DATAFRAME
+    # 4. CONVERT TO DATAFRAME & RANKING
+    if not results:
+        return pd.DataFrame()
+
     report = pd.DataFrame(results)
     
-    # Sort by highest score
+    # Sort berdasarkan skor tertinggi
     report = report.sort_values(by='Quant_Score', ascending=False)
 
-    # Add ranking column
+    # Reset index untuk Ranking
     report = report.reset_index(drop=True)
     report.index = report.index + 1
     report.insert(0, "Rank", report.index)
@@ -273,7 +298,7 @@ html_path = output_dir / "US_Quant_Terminal.html"
 # Save HTML report
 with open(html_path, "w", encoding="utf-8") as f:
     f.write(f"<html><head>{html_style}</head><body>")
-    f.write("<h2>🚀 US MARKET QUANT RADAR</h2>")
+    f.write("<h2>Signal Surge Amplifier Grid</h2>")
     f.write(f"<p style='text-align:center;color:#8b949e;'>Generated {timestamp}</p>")
     f.write(html_table)
     f.write("</body></html>")

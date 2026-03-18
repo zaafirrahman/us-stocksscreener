@@ -351,7 +351,7 @@ def simple_backtest(ticker, company):
     generate_html_dashboard(ticker, current_price, current_score, threshold, stats_df, full_power_rank, final_swing_score, verdict, recent_signals_df, company)
 
 # EXECUTION
-ticker_to_test = 'AEM' # Ganti sesukamu
+ticker_to_test = 'DOCN' # Ganti sesukamu
 stock = yf.Ticker(ticker_to_test)
 company_name = stock.info["longName"]
 
