@@ -1,14 +1,6 @@
 import yfinance as yf
 import pandas as pd
-import os
-import requests
-from concurrent.futures import ThreadPoolExecutor
-
-# 1. Setup Session & User-Agent (Penting!)
-session = requests.Session()
-session.headers.update({
-    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/110.0.0.0 Safari/537.36'
-})
+from tqdm import tqdm
 
 # List universe kamu (tambahkan ticker lain di sini)
 tickers = [
@@ -86,62 +78,42 @@ tickers = [
     'QQQ', 'BITO', 'TQQQ', 'SQQQ', 'SPY', 'SCHD', 'GLD', 'XBI', 'XLK', 'MSTU', 
     'USO', 'XLU', 'GDX', 'SMH', 'VIG', 'VWO', 'VNQI', 'VYM', 'VGT', 'VCIT', 
     'VNQ', 'VCSH', 'VTIP', 'VEA', 'BND', 'BNDX', 'VXUS', 'VTI', 'VTV']
-filename = "universe_data.csv"
 
-def get_complete_data(ticker):
+data = []
+
+for ticker in tqdm(tickers, desc="Fetching data"):
     try:
-        t = yf.Ticker(ticker, session=session)
-        info = t.info
-        
-        # Ambil 4 data utama
-        data = {
-            'Ticker': ticker,
-            'Name': info.get('longName', 'Unknown'),
-            'Sector': info.get('sector', 'Unknown'),
-            'Industry': info.get('industry', 'Unknown')
-        }
-        print(f"[OK] {ticker} - {data['Name']}")
-        return data
+        stock = yf.Ticker(ticker)
+        info = stock.info
+
+        nama = info.get('longName', None)
+        sektor = info.get('sector', None)
+        industry = info.get('industry', None)
+
+        # 🔥 ETF handling
+        if sektor is None:
+            sektor = "Exchange Traded Fund"
+            industry = info.get('category', None)
+
+        data.append({
+            'ticker': ticker,
+            'nama_perusahaan': nama,
+            'sektor': sektor,
+            'industry': industry
+        })
+
     except Exception as e:
-        print(f"[ERROR] {ticker}: {e}")
-        return {
-            'Ticker': ticker, 
-            'Name': 'Error/Blocked', 
-            'Sector': 'Error/Blocked', 
-            'Industry': 'Error/Blocked'
-        }
+        data.append({
+            'ticker': ticker,
+            'nama_perusahaan': None,
+            'sektor': None,
+            'industry': None
+        })
 
-# --- MEKANISME RESUME (BIAR NGGAK KERJA DUA KALI) ---
-if os.path.exists(filename):
-    df_existing = pd.read_csv(filename)
-    done_tickers = df_existing['Ticker'].tolist()
-    tickers_to_process = [t for t in tickers if t not in done_tickers]
-else:
-    df_existing = pd.DataFrame(columns=['Ticker', 'Name', 'Sector', 'Industry'])
-    tickers_to_process = tickers
+# Convert ke DataFrame
+df = pd.DataFrame(data)
 
-if tickers_to_process:
-    print(f"Memproses {len(tickers_to_process)} ticker baru...")
-    
-    # Gunakan worker sedikit saja (2-3) agar tidak cepat kena ban lagi
-    with ThreadPoolExecutor(max_workers=3) as executor:
-        new_results = list(executor.map(get_complete_data, tickers_to_process))
-    
-    # Update DataFrame
-    df_new = pd.DataFrame(new_results)
-    df_final = pd.concat([df_existing, df_new], ignore_index=True)
-    
-    # Simpan ke CSV
-    df_final.to_csv(filename, index=False)
-    print(f"\nProses selesai! Data disimpan di {filename}")
-else:
-    df_final = df_existing
-    print("\nSemua ticker sudah ada datanya di CSV lokal.")
+# Simpan ke CSV
+df.to_csv('ticker_universe.csv', index=False)
 
-# --- TAMPILKAN 5 DATA PERTAMA SEBAGAI PREVIEW ---
-print("\n--- Preview Isi CSV ---")
-print(df_final.head())
-
-# --- RINGKASAN SEKTOR ---
-print("\n--- Ringkasan Sektor di Universe ---")
-print(df_final['Sector'].value_counts())
+print("✅ Data berhasil disimpan ke ticker_universe.csv")
