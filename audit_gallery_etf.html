@@ -1,0 +1,620 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quant Radar - Logo Audit</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #0f172a; color: #f8fafc; margin: 0; padding: 20px; }
+        .header { position: sticky; top: 0; background: #1e293b; padding: 20px; border-radius: 12px; z-index: 100; box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1); margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; }
+        h1 { margin: 0; font-size: 24px; color: #38bdf8; }
+        .stats { font-weight: bold; color: #94a3b8; }
+        
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 15px; }
+        .card { background: #1e293b; border: 1px solid #334155; border-radius: 8px; padding: 12px; text-align: center; transition: transform 0.2s, border-color 0.2s; cursor: pointer; }
+        .card:hover { transform: translateY(-3px); border-color: #38bdf8; background: #232f45; }
+        
+        /* Container logo: Background putih biar SVG transparan kelihatan jelas */
+        .img-wrapper { background: #ffffff; border-radius: 6px; padding: 8px; margin-bottom: 8px; display: flex; align-items: center; justify-content: center; height: 60px; }
+        .card img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        
+        .ticker { font-size: 13px; font-weight: 700; letter-spacing: 0.5px; color: #cbd5e1; }
+        .error-hint { color: #ef4444; font-size: 10px; margin-top: 4px; display: none; }
+        
+        /* Jika gambar gagal load (Broken Link) */
+        img:error { content: url('https://via.placeholder.com/60?text=ERR'); }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div>
+            <h1>Quant Radar: Logo Audit</h1>
+            <div class="stats">Total Terkumpul: 80 Logos</div>
+        </div>
+        <div style="font-size: 12px; color: #64748b;">Tips: Klik kartu untuk copy ticker</div>
+    </div>
+
+    <div class="grid">
+
+        <div class="card" onclick="copyToClipboard('ACWI')">
+            <div class="img-wrapper">
+                <img src="logos_etf/ACWI.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">ACWI</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('AOR')">
+            <div class="img-wrapper">
+                <img src="logos_etf/AOR.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">AOR</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('ARKK')">
+            <div class="img-wrapper">
+                <img src="logos_etf/ARKK.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">ARKK</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('BITO')">
+            <div class="img-wrapper">
+                <img src="logos_etf/BITO.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">BITO</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('BLOK')">
+            <div class="img-wrapper">
+                <img src="logos_etf/BLOK.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">BLOK</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('BND')">
+            <div class="img-wrapper">
+                <img src="logos_etf/BND.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">BND</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('BNDX')">
+            <div class="img-wrapper">
+                <img src="logos_etf/BNDX.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">BNDX</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('BOTZ')">
+            <div class="img-wrapper">
+                <img src="logos_etf/BOTZ.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">BOTZ</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('CIBR')">
+            <div class="img-wrapper">
+                <img src="logos_etf/CIBR.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">CIBR</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('CONL')">
+            <div class="img-wrapper">
+                <img src="logos_etf/CONL.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">CONL</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('DBA')">
+            <div class="img-wrapper">
+                <img src="logos_etf/DBA.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">DBA</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('DIA')">
+            <div class="img-wrapper">
+                <img src="logos_etf/DIA.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">DIA</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('EIDO')">
+            <div class="img-wrapper">
+                <img src="logos_etf/EIDO.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">EIDO</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('EMB')">
+            <div class="img-wrapper">
+                <img src="logos_etf/EMB.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">EMB</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('EWY')">
+            <div class="img-wrapper">
+                <img src="logos_etf/EWY.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">EWY</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('EWZ')">
+            <div class="img-wrapper">
+                <img src="logos_etf/EWZ.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">EWZ</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('FNGU')">
+            <div class="img-wrapper">
+                <img src="logos_etf/FNGU.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">FNGU</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('FXI')">
+            <div class="img-wrapper">
+                <img src="logos_etf/FXI.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">FXI</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('GDX')">
+            <div class="img-wrapper">
+                <img src="logos_etf/GDX.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">GDX</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('GLD')">
+            <div class="img-wrapper">
+                <img src="logos_etf/GLD.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">GLD</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('HDV')">
+            <div class="img-wrapper">
+                <img src="logos_etf/HDV.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">HDV</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('HYG')">
+            <div class="img-wrapper">
+                <img src="logos_etf/HYG.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">HYG</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('IBIT')">
+            <div class="img-wrapper">
+                <img src="logos_etf/IBIT.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">IBIT</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('ICLN')">
+            <div class="img-wrapper">
+                <img src="logos_etf/ICLN.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">ICLN</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('IEF')">
+            <div class="img-wrapper">
+                <img src="logos_etf/IEF.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">IEF</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('IGOV')">
+            <div class="img-wrapper">
+                <img src="logos_etf/IGOV.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">IGOV</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('IWM')">
+            <div class="img-wrapper">
+                <img src="logos_etf/IWM.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">IWM</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('JEPQ')">
+            <div class="img-wrapper">
+                <img src="logos_etf/JEPQ.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">JEPQ</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('JPIN')">
+            <div class="img-wrapper">
+                <img src="logos_etf/JPIN.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">JPIN</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('KWEB')">
+            <div class="img-wrapper">
+                <img src="logos_etf/KWEB.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">KWEB</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('LQD')">
+            <div class="img-wrapper">
+                <img src="logos_etf/LQD.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">LQD</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('MBB')">
+            <div class="img-wrapper">
+                <img src="logos_etf/MBB.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">MBB</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('MCHI')">
+            <div class="img-wrapper">
+                <img src="logos_etf/MCHI.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">MCHI</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('MSTU')">
+            <div class="img-wrapper">
+                <img src="logos_etf/MSTU.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">MSTU</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('NVDL')">
+            <div class="img-wrapper">
+                <img src="logos_etf/NVDL.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">NVDL</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('PDBC')">
+            <div class="img-wrapper">
+                <img src="logos_etf/PDBC.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">PDBC</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('PGX')">
+            <div class="img-wrapper">
+                <img src="logos_etf/PGX.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">PGX</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('QQQ')">
+            <div class="img-wrapper">
+                <img src="logos_etf/QQQ.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">QQQ</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('QQQM')">
+            <div class="img-wrapper">
+                <img src="logos_etf/QQQM.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">QQQM</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('QYLD')">
+            <div class="img-wrapper">
+                <img src="logos_etf/QYLD.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">QYLD</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('SCHD')">
+            <div class="img-wrapper">
+                <img src="logos_etf/SCHD.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">SCHD</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('SGOV')">
+            <div class="img-wrapper">
+                <img src="logos_etf/SGOV.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">SGOV</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('SHY')">
+            <div class="img-wrapper">
+                <img src="logos_etf/SHY.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">SHY</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('SKYY')">
+            <div class="img-wrapper">
+                <img src="logos_etf/SKYY.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">SKYY</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('SLV')">
+            <div class="img-wrapper">
+                <img src="logos_etf/SLV.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">SLV</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('SMH')">
+            <div class="img-wrapper">
+                <img src="logos_etf/SMH.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">SMH</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('SOXL')">
+            <div class="img-wrapper">
+                <img src="logos_etf/SOXL.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">SOXL</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('SOXS')">
+            <div class="img-wrapper">
+                <img src="logos_etf/SOXS.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">SOXS</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('SOXX')">
+            <div class="img-wrapper">
+                <img src="logos_etf/SOXX.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">SOXX</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('SPHD')">
+            <div class="img-wrapper">
+                <img src="logos_etf/SPHD.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">SPHD</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('SPLV')">
+            <div class="img-wrapper">
+                <img src="logos_etf/SPLV.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">SPLV</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('SPY')">
+            <div class="img-wrapper">
+                <img src="logos_etf/SPY.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">SPY</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('SQQQ')">
+            <div class="img-wrapper">
+                <img src="logos_etf/SQQQ.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">SQQQ</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('TLT')">
+            <div class="img-wrapper">
+                <img src="logos_etf/TLT.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">TLT</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('TQQQ')">
+            <div class="img-wrapper">
+                <img src="logos_etf/TQQQ.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">TQQQ</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('TSLL')">
+            <div class="img-wrapper">
+                <img src="logos_etf/TSLL.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">TSLL</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('USO')">
+            <div class="img-wrapper">
+                <img src="logos_etf/USO.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">USO</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('UUP')">
+            <div class="img-wrapper">
+                <img src="logos_etf/UUP.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">UUP</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('VCIT')">
+            <div class="img-wrapper">
+                <img src="logos_etf/VCIT.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">VCIT</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('VCSH')">
+            <div class="img-wrapper">
+                <img src="logos_etf/VCSH.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">VCSH</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('VEA')">
+            <div class="img-wrapper">
+                <img src="logos_etf/VEA.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">VEA</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('VGT')">
+            <div class="img-wrapper">
+                <img src="logos_etf/VGT.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">VGT</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('VIG')">
+            <div class="img-wrapper">
+                <img src="logos_etf/VIG.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">VIG</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('VNQ')">
+            <div class="img-wrapper">
+                <img src="logos_etf/VNQ.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">VNQ</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('VNQI')">
+            <div class="img-wrapper">
+                <img src="logos_etf/VNQI.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">VNQI</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('VTI')">
+            <div class="img-wrapper">
+                <img src="logos_etf/VTI.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">VTI</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('VTIP')">
+            <div class="img-wrapper">
+                <img src="logos_etf/VTIP.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">VTIP</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('VTV')">
+            <div class="img-wrapper">
+                <img src="logos_etf/VTV.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">VTV</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('VWO')">
+            <div class="img-wrapper">
+                <img src="logos_etf/VWO.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">VWO</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('VXUS')">
+            <div class="img-wrapper">
+                <img src="logos_etf/VXUS.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">VXUS</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('VYM')">
+            <div class="img-wrapper">
+                <img src="logos_etf/VYM.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">VYM</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('XBI')">
+            <div class="img-wrapper">
+                <img src="logos_etf/XBI.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">XBI</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('XLB')">
+            <div class="img-wrapper">
+                <img src="logos_etf/XLB.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">XLB</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('XLE')">
+            <div class="img-wrapper">
+                <img src="logos_etf/XLE.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">XLE</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('XLF')">
+            <div class="img-wrapper">
+                <img src="logos_etf/XLF.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">XLF</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('XLK')">
+            <div class="img-wrapper">
+                <img src="logos_etf/XLK.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">XLK</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('XLP')">
+            <div class="img-wrapper">
+                <img src="logos_etf/XLP.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">XLP</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('XLU')">
+            <div class="img-wrapper">
+                <img src="logos_etf/XLU.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">XLU</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('XLV')">
+            <div class="img-wrapper">
+                <img src="logos_etf/XLV.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">XLV</span>
+        </div>
+    
+        <div class="card" onclick="copyToClipboard('XLY')">
+            <div class="img-wrapper">
+                <img src="logos_etf/XLY.svg" loading="lazy" onerror="this.parentElement.style.border='2px solid #ef4444';">
+            </div>
+            <span class="ticker">XLY</span>
+        </div>
+    
+    </div>
+
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text);
+            console.log('Copied:', text);
+            // Alert kecil simpel
+            const notification = document.createElement('div');
+            notification.innerText = 'Copied: ' + text;
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.right = '20px';
+            notification.style.background = '#38bdf8';
+            notification.style.padding = '10px 20px';
+            notification.style.borderRadius = '5px';
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 2000);
+        }
+    </script>
+</body>
+</html>
